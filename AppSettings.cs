@@ -20,6 +20,7 @@ namespace pomodoro
         public string long_break_color = "#fffd80";
         public double opacity = 0.7;
     }
+
     public class AppSettings<T> where T : new()
     {
         private const string DEFAULT_FILENAME = "settings.json";
@@ -40,6 +41,16 @@ namespace pomodoro
             if (File.Exists(fileName))
                 t = (new JavaScriptSerializer()).Deserialize<T>(File.ReadAllText(fileName));
             return t;
+        }
+        public static T LoadFromJSON(string content)
+        {
+            T t = new T(); 
+            t = (new JavaScriptSerializer()).Deserialize<T>(content);
+            return t;
+        }
+        public  string SerializeJSON()
+        {
+            return (new JavaScriptSerializer()).Serialize(this);
         }
     }
 }
